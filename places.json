@@ -1,0 +1,35 @@
+{
+  "tiers": [
+    {
+      "key": "green",
+      "name": "Go-to",
+      "color": "#7fc79a",
+      "weights": { "good": 100, "normal": 70, "deserve": 50, "custom": 50 },
+      "customOn": true
+    },
+    {
+      "key": "yellow",
+      "name": "Solid",
+      "color": "#f5c95c",
+      "weights": { "good": 0, "normal": 30, "deserve": 30, "custom": 30 },
+      "customOn": true
+    },
+    {
+      "key": "red",
+      "name": "Cheat meal",
+      "color": "#f08a8a",
+      "weights": { "good": 0, "normal": 0, "deserve": 20, "custom": 20 },
+      "customOn": true
+    }
+  ],
+  "places": [
+    { "name": "Chipotle", "tier": "green", "enabled": true },
+    { "name": "Sushi Burrito", "tier": "green", "enabled": true },
+    { "name": "Meesum", "tier": "green", "enabled": true },
+    { "name": "Bite & Bento", "tier": "green", "enabled": true },
+    { "name": "Cafe on the Ave", "tier": "yellow", "enabled": true },
+    { "name": "Tofu house", "tier": "yellow", "enabled": true },
+    { "name": "Nuodle", "tier": "red", "enabled": true },
+    { "name": "Red Pepper", "tier": "red", "enabled": true }
+  ]
+}

@@ -1,0 +1,525 @@
+/* style.css
+   Mobile first: everything up top is the phone layout. Wider screens get
+   extra rules in the @media (min-width: ...) blocks at the bottom. */
+
+/* ---------- Colors (light mode default, dark mode below) ---------- */
+:root {
+  /* Palette borrowed from ameliali.com: warm brown on cream */
+  --bg: #fafafc;
+  --surface: #ffffff;
+  --surface-2: #fff7e3;
+  --text: #473c35;
+  --muted: #75655a;
+  --border: #e8dfd0;
+  --accent: #473c35;
+  --accent-text: #fff7e3;
+  --danger: #c05a2c;
+  --shadow: 0 8px 30px rgba(71, 60, 53, 0.15);
+  --radius: 15px;
+  --heading: "Montserrat", system-ui, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC",
+    "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1a17;
+    --surface: #2a2420;
+    --surface-2: #362e29;
+    --text: #fff7e3;
+    --muted: #c7bdb5;
+    --border: #463c35;
+    --accent: #f0deba;
+    --accent-text: #473c35;
+    --danger: #ff9466;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[hidden] { display: none !important; }
+
+h1, h2, h3 { margin: 0; font-family: var(--heading); font-weight: 600; }
+
+input, select, textarea, button { font: inherit; color: inherit; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.topbar h1 { font-size: 1.3rem; letter-spacing: 0.3px; }
+.brand { display: flex; align-items: center; gap: 6px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  min-height: 44px;            /* comfortable thumb target */
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--heading);
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.btn:active:not(:disabled) { transform: scale(0.96); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.btn-quiet { background: transparent; }
+.btn-danger { color: var(--danger); }
+.btn-small { min-height: 36px; padding: 0 12px; font-size: 0.875rem; }
+
+:focus-visible { outline: 3px solid #4c8dff; outline-offset: 2px; }
+
+/* ---------- Screens ---------- */
+.screen {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Like the portfolio's section titles: bold title, then a thin line */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+}
+
+.hint { color: var(--muted); font-size: 0.875rem; margin: 4px 0; }
+
+/* ---------- Chiikawa stickers ---------- */
+.sticker { display: block; object-fit: contain; pointer-events: none; }
+.sticker-header { width: 36px; height: 36px; }
+.sticker-result { width: 96px; height: 96px; margin-top: -8px; }
+.sticker-empty { width: 88px; height: 88px; margin: 0 auto 4px; }
+.sticker-places { width: 64px; height: 64px; flex-shrink: 0; }
+
+/* Mood sticker sits at the right end of the "Mood" title line */
+.mood { position: relative; }
+.mood .section-label { padding-right: 72px; }
+.sticker-mood {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  width: 64px;
+  height: 64px;
+}
+
+.places-intro { display: flex; align-items: center; gap: 12px; }
+.places-intro .hint { margin: 0; }
+
+/* ---------- Mood meter ---------- */
+.segmented {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 4px;
+}
+.segmented label { flex: 1; }
+.segmented input,
+.custom-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.segmented span {
+  font-family: var(--heading);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  text-align: center;
+  cursor: pointer;
+}
+.segmented input:checked + span {
+  background: var(--surface);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+.segmented input:focus-visible + span,
+.custom-toggle input:focus-visible + span { outline: 3px solid #4c8dff; }
+
+.custom-toggle { display: inline-block; margin-top: 10px; }
+.custom-toggle span {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px dashed var(--border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.custom-toggle input:checked + span {
+  border-style: solid;
+  border-color: var(--text);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.custom-panel {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.custom-row {
+  display: grid;
+  grid-template-columns: auto 1fr 3ch;
+  align-items: center;
+  gap: 10px;
+}
+.custom-row label { display: flex; align-items: center; gap: 8px; }
+.custom-row input[type="range"] { width: 100%; }
+.custom-row output { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- Wheels ---------- */
+.combined {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.wheel-wrap { position: relative; width: 100%; }
+.wheel-wrap canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+}
+.wheel-big { max-width: 360px; }
+
+/* Little triangle at the top that marks the winner */
+.pointer {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 22px solid var(--text);
+  z-index: 1;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+}
+.tier-wheel .pointer {
+  border-left-width: 7px;
+  border-right-width: 7px;
+  border-top-width: 12px;
+  top: -2px;
+}
+
+.btn-spin { min-width: 160px; min-height: 52px; font-size: 1.1rem; }
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin: 0;
+  width: 100%;
+}
+.empty p { margin: 0; }
+.empty-small { padding: 12px 6px; font-size: 0.8rem; }
+
+/* Phone: tier wheels stack, each as a compact horizontal row */
+.tier-wheel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.tier-wheel {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.tier-wheel .wheel-wrap { max-width: 110px; }
+.tier-wheel .badge { white-space: nowrap; font-size: 0.75rem; padding: 3px 8px; }
+.tier-wheel-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* ---------- Tier badge (color always paired with a text label) ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--surface-2);
+}
+.badge::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tier-color, #888);
+}
+
+/* ---------- Result card (bottom sheet on phones) ---------- */
+.result {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  animation: fade-in 0.2s ease-out;
+}
+.result-card {
+  position: relative;
+  width: 100%;
+  padding: 28px 20px calc(24px + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  animation: slide-up 0.3s ease-out;
+}
+.result-kicker { margin: 0; color: var(--muted); font-size: 0.875rem; }
+.result-name {
+  font-size: 1.9rem;
+  line-height: 1.15;
+  overflow-wrap: anywhere;   /* long names wrap instead of overflowing */
+}
+.result-card .btn-primary { margin-top: 8px; min-width: 180px; }
+.result-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Reduced motion: no sliding, just a quick fade */
+@media (prefers-reduced-motion: reduce) {
+  .result-card { animation: fade-in 0.15s ease-out; }
+}
+
+/* ---------- Places screen ---------- */
+.tier-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.tier-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--tier-color, #888);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tier-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tier-section-head h2 { font-size: 1.1rem; }
+
+.tier-settings summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.875rem;
+  padding: 4px 0;
+}
+.tier-settings-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 8px;
+}
+.tier-settings-body label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.field {
+  width: 100%;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+input[type="color"].field { padding: 2px; }
+
+.place-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+
+/* Phone: each place is a small card with stacked controls */
+.place-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "toggle name delete"
+    "move   move move";
+  gap: 6px 8px;
+  align-items: center;
+  padding: 10px;
+  background: var(--surface-2);
+  border-radius: 12px;
+}
+.place-row.is-off .place-name { text-decoration: line-through; opacity: 0.6; }
+.place-toggle { grid-area: toggle; }
+.place-name   { grid-area: name; font-weight: 600; }
+.place-delete { grid-area: delete; }
+.place-move   { grid-area: move; font-size: 0.875rem; }
+
+/* iOS-style on/off switch made from a checkbox */
+.switch {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s;
+}
+.switch:checked { background: #7fc79a; }
+.switch:checked::after { transform: translateX(18px); }
+
+.add-place { display: flex; gap: 8px; }
+.add-place .field { flex: 1; }
+
+/* =================================================================
+   Wider screens. Each block only adds/overrides what changes.
+   ================================================================= */
+
+/* Most phones (375px+): the three tier wheels fit side by side */
+@media (min-width: 360px) {
+  .tier-wheel-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .tier-wheel {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 10px 8px;
+  }
+  .tier-wheel-info { align-items: center; text-align: center; }
+}
+
+/* Tablets and up */
+@media (min-width: 700px) {
+  .screen { padding: 24px; }
+  .wheel-big { max-width: 420px; }
+  .tier-sections { grid-template-columns: repeat(2, 1fr); }
+
+  /* Place rows fit on one line */
+  .place-row {
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 9rem) auto;
+    grid-template-areas: "toggle name move delete";
+  }
+
+  /* Result card floats in the middle instead of a bottom sheet */
+  .result { align-items: center; }
+  .result-card {
+    max-width: 420px;
+    border-radius: 20px;
+    padding-bottom: 28px;
+  }
+}
+
+/* Desktop: wheel on the left, mood + tier wheels on the right */
+@media (min-width: 960px) {
+  .screen-wheel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas:
+      "combined mood"
+      "combined tiers";
+    align-items: start;
+    gap: 24px 40px;
+  }
+  .mood { grid-area: mood; }
+  .combined { grid-area: combined; }
+  .tier-wheels { grid-area: tiers; }
+  .wheel-big { max-width: 480px; }
+}

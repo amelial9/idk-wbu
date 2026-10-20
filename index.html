@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Food Decider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="sticker sticker-header" data-sticker="header" alt="">
+      <h1 id="app-name">Food Decider</h1>
+    </div>
+    <button id="nav-toggle" class="btn btn-quiet" type="button">Places</button>
+  </header>
+
+  <!-- ===================== Wheel screen ===================== -->
+  <main id="screen-wheel" class="screen screen-wheel">
+
+    <section class="mood" aria-labelledby="mood-label">
+      <h2 id="mood-label" class="section-label">Mood</h2>
+      <div class="segmented" role="radiogroup" aria-labelledby="mood-label">
+        <label><input type="radio" name="mood" value="good"><span>Being good</span></label>
+        <label><input type="radio" name="mood" value="normal"><span>Normal day</span></label>
+        <label><input type="radio" name="mood" value="deserve"><span>We deserve it</span></label>
+      </div>
+      <label class="custom-toggle">
+        <input type="radio" name="mood" value="custom"> <span>Custom</span>
+      </label>
+      <div id="custom-panel" class="custom-panel" hidden></div>
+      <img id="mood-sticker" class="sticker sticker-mood" alt="">
+    </section>
+
+    <section class="combined">
+      <div class="wheel-wrap wheel-big">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel-combined" aria-label="Food wheel"></canvas>
+      </div>
+      <div id="empty-combined" class="empty" hidden>
+        <img class="sticker sticker-empty" data-sticker="empty" alt="">
+        <p>No places on this wheel. Turn some on or change the mood.</p>
+      </div>
+      <button id="spin-combined" class="btn btn-primary btn-spin" type="button">Spin</button>
+    </section>
+
+    <section class="tier-wheels" aria-labelledby="tier-wheels-label">
+      <h2 id="tier-wheels-label" class="section-label">Already know the vibe?</h2>
+      <div id="tier-wheels" class="tier-wheel-grid"></div>
+    </section>
+  </main>
+
+  <!-- ===================== Places screen ===================== -->
+  <main id="screen-places" class="screen screen-places" hidden>
+    <div class="places-intro">
+      <img class="sticker sticker-places" data-sticker="places" alt="">
+      <p class="hint">Quick tweaks for today, like switching off a place that's closed. They reset when you refresh.</p>
+    </div>
+    <div id="tier-sections" class="tier-sections"></div>
+
+  </main>
+
+  <!-- ===================== Result card ===================== -->
+  <div id="result" class="result" hidden>
+    <div class="result-card" role="dialog" aria-labelledby="result-name">
+      <button id="result-close" class="result-close" type="button" aria-label="Close">×</button>
+      <img class="sticker sticker-result" data-sticker="result" alt="">
+      <p class="result-kicker">We're eating at</p>
+      <h2 id="result-name" class="result-name"></h2>
+      <span id="result-badge" class="badge"></span>
+      <button id="spin-again" class="btn btn-primary" type="button">Spin again</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
