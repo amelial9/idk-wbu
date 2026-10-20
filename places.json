@@ -30,6 +30,10 @@
     { "name": "Cafe on the Ave", "tier": "yellow", "enabled": true },
     { "name": "Tofu house", "tier": "yellow", "enabled": true },
     { "name": "Nuodle", "tier": "red", "enabled": true },
-    { "name": "Red Pepper", "tier": "red", "enabled": true }
+    { "name": "Red Pepper", "tier": "red", "enabled": true },
+    { "name": "冯瀛米粉", "tier": "red", "enabled": true },
+    { "name": "Raising Cane's", "tier": "red", "enabled": true },
+    { "name": "Master Bing", "tier": "red", "enabled": true },
+    { "name": "Call A Chicken", "tier": "red", "enabled": true }
   ]
 }
